@@ -7,7 +7,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,              // fail CI if a test.only is left in the code
   retries: process.env.CI ? 2 : 0,           // retry failed tests twice in CI, not locally
   workers: process.env.CI ? 1 : undefined,   // one worker in CI, automatic locally
-  reporter: 'html',                          // create the HTML report
+  reporter: process.env.CI ? [['github'], ['html']] : 'html', // in CI, also show errors as GitHub annotations
 
   /* Shared settings for all tests */
   use: {
