@@ -1,19 +1,21 @@
-import{type Page, type Locator} from '@playwright/test';
-export class LoginPage {
-    readonly page: Page;
-    readonly usernameInput: Locator;
-    readonly passwordInput: Locator;
-    readonly loginButton: Locator;
-    readonly errorMessage: Locator;
+import { type Page, type Locator } from '@playwright/test';
 
-    constructor(page: Page) {
-        this.page = page;
-        this.usernameInput = page.getByTestId('username');
-        this.passwordInput = page.getByTestId('password');
-        this.loginButton = page.getByTestId('login-button');
-        this.errorMessage = page.getByTestId('error');
-}
-async goto() {                     // actions you CAN DO on the page
+export class LoginPage {
+  readonly page: Page;
+  readonly usernameInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+  readonly errorMessage: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.getByTestId('username');
+    this.passwordInput = page.getByTestId('password');
+    this.loginButton = page.getByTestId('login-button');
+    this.errorMessage = page.getByTestId('error');
+  }
+
+  async goto() {
     await this.page.goto('/');
   }
 
@@ -23,4 +25,3 @@ async goto() {                     // actions you CAN DO on the page
     await this.loginButton.click();
   }
 }
-     
