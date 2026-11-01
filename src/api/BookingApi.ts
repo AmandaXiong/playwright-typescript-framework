@@ -12,8 +12,16 @@ export type Booking = {
 export class BookingApi {
   constructor(private readonly request: APIRequestContext) {}
 
+  async ping(): Promise<APIResponse> {
+    return this.request.get('/ping');
+  }
+
+  async login(username: string, password: string): Promise<APIResponse> {
+    return this.request.post('/auth', { data: { username, password } });
+  }
+
   async createToken(username: string, password: string): Promise<string> {
-    const response = await this.request.post('/auth', { data: { username, password } });
+    const response = await this.login(username, password);
     const body = await response.json();
     if (!body.token) {
       throw new Error(`Login failed: ${JSON.stringify(body)}`);
@@ -29,9 +37,20 @@ export class BookingApi {
     return this.request.get(`/booking/${id}`);
   }
 
+  async findBookingsByName(firstname: string, lastname: string): Promise<APIResponse> {
+    return this.request.get('/booking', { params: { firstname, lastname } });
+  }
+
   async updateBooking(id: number, booking: Booking, token: string): Promise<APIResponse> {
     return this.request.put(`/booking/${id}`, {
       data: booking,
+      headers: { Cookie: `token=${token}` },
+    });
+  }
+
+  async partialUpdateBooking(id: number, fields: Partial<Booking>, token: string): Promise<APIResponse> {
+    return this.request.patch(`/booking/${id}`, {
+      data: fields,
       headers: { Cookie: `token=${token}` },
     });
   }

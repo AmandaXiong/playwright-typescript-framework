@@ -61,4 +61,50 @@ test.describe('Booking API', () => {
 
     expect(response.status()).toBe(403);
   });
+
+  test('health check returns 201', async () => {
+    const response = await api.ping();
+
+    expect(response.status()).toBe(201);
+  });
+
+  test('login with a wrong password returns no token', async () => {
+    const response = await api.login(required('BOOKER_USER'), 'wrong-password');
+
+    // This API returns 200 even for bad credentials; a real API should return 401
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.token).toBeUndefined();
+    expect(body.reason).toBe('Bad credentials');
+  });
+
+  test('returns 404 for a booking that does not exist', async () => {
+    const response = await api.getBooking(999999999);
+
+    expect(response.status()).toBe(404);
+  });
+
+  test('partially updates a booking with PATCH', async () => {
+    const created = await (await api.createBooking(newBooking)).json();
+    const token = await api.createToken(required('BOOKER_USER'), required('BOOKER_PASSWORD'));
+
+    const response = await api.partialUpdateBooking(created.bookingid, { totalprice: 500 }, token);
+
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.totalprice).toBe(500);                     // changed
+    expect(body.firstname).toBe(newBooking.firstname);     // unchanged
+    expect(body.bookingdates).toEqual(newBooking.bookingdates); // unchanged
+  });
+
+  test('finds a booking by guest name', async () => {
+    const created = await (await api.createBooking(newBooking)).json();
+
+    const response = await api.findBookingsByName(newBooking.firstname, newBooking.lastname);
+
+    expect(response.status()).toBe(200);
+    const results: { bookingid: number }[] = await response.json();
+    const ids = results.map((r) => r.bookingid);
+    expect(ids).toContain(created.bookingid);
+  });
 });
