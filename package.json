@@ -1,11 +1,21 @@
 {
   "name": "playwright-typescript-framework",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
+  "description": "Playwright + TypeScript E2E test framework for SauceDemo (Page Object Model, GitHub Actions CI)",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "test-automation",
+    "page-object-model"
+  ],
+  "author": "Amanda Xiong",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
