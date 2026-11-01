@@ -14,6 +14,7 @@ End-to-end UI test automation framework for the [SauceDemo](https://www.saucedem
 | Test data | `.env` locally, GitHub Actions encrypted secrets in CI |
 | CI/CD | GitHub Actions |
 | Reporting | Playwright HTML report (uploaded as a CI artifact) |
+| API testing | Playwright `request` fixture against [Restful Booker](https://restful-booker.herokuapp.com) |
 
 ## Test coverage
 
@@ -23,6 +24,7 @@ End-to-end UI test automation framework for the [SauceDemo](https://www.saucedem
 | **Inventory** | Shows all 6 products · Sorts by price (low to high) · Adding a product updates the cart badge |
 | **Cart** | Added product appears in the cart · Removing a product empties the cart · Continue Shopping returns to products |
 | **Checkout** | Complete purchase end to end · Missing first name shows a validation error · Order total equals item total plus tax |
+| **Booking API** | Create booking · Get booking by id · Update with auth token · Delete with auth token · Delete without token returns 403 |
 
 Covers both positive and negative paths, including input validation and price calculation checks.
 
@@ -89,7 +91,7 @@ npm run report                                # open the last HTML report
 ## Roadmap
 
 - [ ] Custom fixtures to inject page objects and remove repeated setup
-- [ ] API tests (`tests/api/`)
+- [x] API tests (`tests/api/`)
 - [ ] Cross-browser runs (Firefox, WebKit)
 
 ## Author
