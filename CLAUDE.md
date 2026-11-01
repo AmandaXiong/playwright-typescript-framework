@@ -51,6 +51,7 @@ npm run typecheck                         # type-check (tsc --noEmit); no lint i
 
 - Work on a branch (`feature/...`, `chore/...`, `docs/...`) and merge to `main` through a pull request.
 - Run the full suite (`npm test`) before committing.
+- Do not add "Co-Authored-By" or "Claude-Session" lines to commit messages or PR descriptions.
 
 ## Planned
 
