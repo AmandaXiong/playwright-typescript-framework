@@ -70,11 +70,12 @@ PASSWORD=
 ## Running tests
 
 ```bash
-npx playwright test                           # run all tests
+npm test                                      # run all tests
 npx playwright test tests/ui/cart.spec.ts     # run one file
 npx playwright test -g "complete a purchase"  # run tests matching a name
-npx playwright test --ui                      # interactive UI mode
-npx playwright show-report                    # open the last HTML report
+npm run test:ui                               # interactive UI mode
+npm run test:headed                           # watch tests in a real browser
+npm run report                                # open the last HTML report
 ```
 
 ## Design decisions
